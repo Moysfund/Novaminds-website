@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Heavenly Gamy Techy One of One — NovaMinds</title>
+  <meta name="description" content="NovaMinds — an Imagine Cup-bound team crafting playful, powerful tech experiences." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f14;
+      --bg-soft: #101621;
+      --text: #e6eefc;
+      --muted: #a9b7d9;
+      --brand: #6ae3ff;
+      --brand-2: #b084ff;
+      --accent: #00ffa3;
+      --danger: #ff6b6b;
+      --card: rgba(255,255,255,0.06);
+      --border: rgba(255,255,255,0.12);
+      --shadow: 0 10px 30px rgba(0,0,0,0.45);
+    }
+    [data-theme="light"] {
+      --bg: #f6f8fc;
+      --bg-soft: #ffffff;
+      --text: #0c1220;
+      --muted: #4b5875;
+      --brand: #2554f0;
+      --brand-2: #7c3aed;
+      --accent: #059669;
+      --danger: #dc2626;
+      --card: rgba(0,0,0,0.04);
+      --border: rgba(0,0,0,0.12);
+      --shadow: 0 10px 30px rgba(0,0,0,0.12);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: var(--text);
+      background: radial-gradient(1200px 600px at 20% -10%, rgba(106, 227, 255, 0.12), transparent 40%),
+                  radial-gradient(900px 500px at 90% 10%, rgba(176, 132, 255, 0.12), transparent 40%),
+                  var(--bg);
+      background-attachment: fixed;
+    }
+
+    a { color: var(--brand); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Nav */
+    .nav {
+      position: sticky; top: 0; z-index: 1000;
+      backdrop-filter: blur(8px);
+      background: linear-gradient(to bottom, rgba(0,0,0,0.25), rgba(0,0,0,0.0));
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto; padding: 14px 20px;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .logo {
+      display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: 0.5px;
+    }
+    .logo-badge {
+      width: 28px; height: 28px; border-radius: 8px;
+      background: conic-gradient(from 210deg, var(--brand), var(--brand-2), var(--accent), var(--brand));
+      box-shadow: var(--shadow);
+      position: relative; overflow: hidden;
+    }
+    .logo-badge::after {
+      content: ""; position: absolute; inset: 0;
+      background: radial-gradient(24px 8px at 50% 20%, rgba(255,255,255,0.4), transparent);
+      mix-blend-mode: overlay;
+    }
+    .nav-links { margin-left: auto; display: flex; gap: 18px; align-items: center; }
+    .nav-links a { color: var(--text); opacity: 0.85; font-weight: 600; }
+    .btn {
+      padding: 10px 14px; border-radius: 10px;
+      border: 1px solid var(--border); background: var(--card); color: var(--text);
+      box-shadow: var(--shadow);
+    }
+    .btn:hover { filter: brightness(1.05); transform: translateY(-1px); transition: 150ms ease; }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
+      border: none; color: #fff;
+    }
+
+    /* Hero */
+    .hero {
+      position: relative; overflow: hidden;
+      max-width: 1100px; margin: 0 auto; padding: 64px 20px 36px;
+      display: grid; grid-template-columns: 1fr; gap: 24px;
+    }
+    .hero .headline {
+      font-weight: 800; font-size: clamp(28px, 6vw, 52px); line-height: 1.06;
+      letter-spacing: -0.5px;
+    }
+    .type {
+      display: inline-block; border-right: 3px solid var(--accent);
+      white-space: nowrap; overflow: hidden;
+    }
+    .hero-sub {
+      font-size: 18px; color: var(--muted); max-width: 720px;
+    }
+    .hero-cta {
+      display: flex; gap: 12px; flex-wrap: wrap; margin-top: 14px;
+    }
+
+    /* Interactive ribbon */
+    .ribbon {
+      position: relative;
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      border-radius: 16px;
+      padding: 18px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+      box-shadow: var(--shadow);
+    }
+    .ribbon .chip {
+      padding: 10px 12px; border-radius: 999px;
+      border: 1px dashed var(--border);
+      display: inline-flex; align-items: center; gap: 10px;
+      backdrop-filter: blur(4px);
+    }
+    .chip .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent); box-shadow: 0 0 12px var(--accent);
+    }
+    .ribbon .marquee {
+      overflow: hidden; white-space: nowrap; position: relative;
+    }
+    .marquee-inner {
+      display: inline-block; padding-left: 100%;
+      animation: marquee 20s linear infinite;
+    }
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+
+    /* Sections */
+    section { padding: 36px 20px; }
+    .wrap { max-width: 1100px; margin: 0 auto; }
+    .section-title {
+      font-weight: 800; font-size: 24px; margin: 0 0 16px;
+      display: inline-flex; align-items: center; gap: 10px;
+    }
+    .section-title .spark {
+      width: 20px; height: 20px; border-radius: 6px;
+      background: conic-gradient(from 180deg, var(--brand), var(--accent), var(--brand-2), var(--brand));
+      box-shadow: 0 0 16px rgba(106,227,255,0.5);
+    }
+
+    /* Cards */
+    .grid {
+      display: grid; gap: 16px;
+      grid-template-columns: repeat(12, 1fr);
+    }
+    .card {
+      grid-column: span 12;
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      border-radius: 16px; padding: 18px; box-shadow: var(--shadow);
+      position: relative; overflow: hidden;
+    }
+    .card:hover .shine { opacity: 0.15; }
+    .shine {
+      position: absolute; inset: -40% -10%;
+      background: radial-gradient(500px 140px at var(--x,50%) var(--y,50%), rgba(255,255,255,0.45), transparent 50%);
+      opacity: 0; transition: opacity 180ms ease;
+      pointer-events: none;
+    }
+    .card h4 { margin: 0 0 8px; font-size: 18px; }
+    .card p { margin: 0; color: var(--muted); }
+
+    /* Team cards */
+    .team-card {
+      display: grid; grid-template-columns: 64px 1fr auto; align-items: center; gap: 14px;
+    }
+    .avatar {
+      width: 64px; height: 64px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--brand-2), var(--brand));
+      display: grid; place-items: center; font-family: "JetBrains Mono", monospace; font-weight: 700; color: #fff;
+    }
+    .tag {
+      font-size: 12px; padding: 5px 9px; border-radius: 999px;
+      border: 1px solid var(--border); background: var(--card); color: var(--text);
+    }
+    .role { color: var(--muted); font-size: 14px; }
+
+    /* Responsive */
+    @media (min-width: 640px) {
+      .card { grid-column: span 6; }
+    }
+    @media (min-width: 960px) {
+      .card { grid-column: span 4; }
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      background: var(--bg-soft);
+      margin-top: 30px;
+    }
+    .footer-inner {
+      max-width: 1100px; margin: 0 auto; padding: 22px 20px;
+      display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center;
+    }
+    .socials { display: flex; gap: 12px; flex-wrap: wrap; }
+    .socials a {
+      padding: 8px 12px; border: 1px solid var(--border); border-radius: 999px;
+      background: var(--card); color: var(--text); font-weight: 600;
+    }
+
+    /* Reveal on scroll */
+    .reveal { opacity: 0; transform: translateY(12px); transition: 400ms ease; }
+    .reveal.show { opacity: 1; transform: translateY(0); }
+
+    /* Toast */
+    .toast {
+      position: fixed; right: 20px; bottom: 20px; z-index: 2000;
+      padding: 12px 14px; border-radius: 12px;
+      border: 1px solid var(--border); background: var(--bg-soft); color: var(--text);
+      box-shadow: var(--shadow); display: none;
+    }
+
+    /* Theme toggle */
+    .toggle {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 12px; border-radius: 999px; border: 1px solid var(--border);
+      background: var(--card); color: var(--text); cursor: pointer;
+    }
+    .toggle .blob {
+      width: 16px; height: 16px; border-radius: 50%;
+      background: radial-gradient(10px 6px at 50% 35%, #fff, rgba(255,255,255,0.2));
+      box-shadow: 0 0 12px var(--brand);
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="logo" aria-label="NovaMinds">
+        <div class="logo-badge" aria-hidden="true"></div>
+        <span>NovaMinds</span>
+      </div>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#team">Team</a>
+        <a href="#project">Project</a>
+        <a href="#contact" class="btn">Contact</a>
+        <button id="themeToggle" class="toggle" aria-label="Toggle theme">
+          <span class="blob" aria-hidden="true"></span> Theme
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="headline">
+      <span class="type" id="type"></span>
+    </div>
+    <p class="hero-sub">
+      We craft playful, powerful experiences built for impact. Imagine Cup is our arena; innovation is our game plan.
+      “Heavenly Gamy Techy One of One” is our ethos—uncompromising craft, fearless creativity.
+    </p>
+    <div class="hero-cta">
+      <a href="#project" class="btn btn-primary">Explore the vision</a>
+      <a href="#team" class="btn">Meet the squad</a>
+      <a href="#contact" class="btn">Collaborate</a>
+    </div>
+
+    <div class="ribbon" aria-label="Live status and highlights">
+      <div class="chip">
+        <span class="dot" aria-hidden="true"></span>
+        <strong>Live:</strong>&nbsp;Prototyping sprint in progress
+      </div>
+      <div class="marquee">
+        <div class="marquee-inner">
+          • Design playtests • Accessibility passes • DevEx tooling trials • Cloud integrations • UX polish • Performance sweeps •
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- About -->
+  <section id="about">
+    <div class="wrap">
+      <h3 class="section-title"><span class="spark"></span> About the mission</h3>
+      <div class="grid">
+        <div class="card reveal">
+          <div class="shine"></div>
+          <h4>Play drives progress</h4>
+          <p>We blend gameful thinking with rigorous engineering to build human-centered tools that feel delightful and stay resilient.</p>
+        </div>
+        <div class="card reveal">
+          <div class="shine"></div>
+          <h4>Imagine Cup bound</h4>
+          <p>We’re channeling our craft toward a competition that celebrates innovation, impact, and community. The journey is the product.</p>
+        </div>
+        <div class="card reveal">
+          <div class="shine"></div>
+          <h4>One-of-one ethos</h4>
+          <p>No copy-paste solutions. We prototype boldly, validate quickly, and ship with care. Distinctive by design.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Project -->
+  <section id="project">
+    <div class="wrap">
+      <h3 class="section-title"><span class="spark"></span> Project preview</h3>
+      <div class="grid">
+        <div class="card reveal">
+          <div class="shine"></div>
+          <h4>Interactive header concept</h4>
+          <p>“Invent Tomorrow, Play Today” animates in real time with a typewriter effect and dynamic gradients that respond to your cursor.</p>
+        </div>
+        <div class="card reveal">
+          <div class="shine"></div>
+          <h4>DevEx-first architecture</h4>
+          <p>We prioritize developer experience: clean contracts, predictable state, and tooling that helps us iterate with confidence.</p>
+        </div>
+        <div class="card reveal">
+          <div class="shine"></div>
+          <h4>Delight with discipline</h4>
+          <p>Micro-interactions, accessible defaults, and performance budgets keep the experience joyful without compromising reliability.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team -->
+  <section id="team">
+    <div class="wrap">
+      <h3 class="section-title"><span class="spark"></span> Meet the team</h3>
+      <div class="grid">
+        <div class="card reveal">
+          <div class="shine"></div>
+          <div class="team-card">
+            <div class="avatar">DO</div>
+            <div>
+              <h4>David Ojo <span class="tag">Team Head & Founder</span></h4>
+              <div class="role">Full Stack Developer</div>
+            </div>
+            <span class="tag">Leadership</span>
+          </div>
+        </div>
+        <div class="card reveal">
+          <div class="shine"></div>
+          <div class="team-card">
+            <div class="avatar">CL</div>
+            <div>
+              <h4>Chinasa Loveth <span class="tag">Project Manager</span></h4>
+              <div class="role">Delivery, scope, and momentum</div>
+            </div>
+            <span class="tag">Operations</span>
+          </div>
+        </div>
+        <div class="card reveal">
+          <div class="shine"></div>
+          <div class="team-card">
+            <div class="avatar">E</div>
+            <div>
+              <h4>Eric <span class="tag">Aspiring DevEx</span></h4>
+              <div class="role">Full Stack Developer</div>
+            </div>
+            <span class="tag">Developer Experience</span>
+          </div>
+        </div>
+        <div class="card reveal">
+          <div class="shine"></div>
+          <div class="team-card">
+            <div class="avatar">M</div>
+            <div>
+              <h4>Micky <span class="tag">Frontend Dev</span></h4>
+              <div class="role">Interfaces, motion, and polish</div>
+            </div>
+            <span class="tag">UX/UI</span>
+          </div>
+        </div>
+        <div class="card reveal">
+          <div class="shine"></div>
+          <div class="team-card">
+            <div class="avatar">CK</div>
+            <div>
+              <h4>CodeKage <span class="tag">Fullstack</span></h4>
+              <div class="role">Frontend-heavy builder</div>
+            </div>
+            <span class="tag">Systems</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="wrap">
+      <h3 class="section-title"><span class="spark"></span> Contact</h3>
+      <div class="grid">
+        <div class="card reveal" style="grid-column: span 12;">
+          <div class="shine"></div>
+          <h4>Say hello</h4>
+          <p>We’re open to collaborations, feedback, and bold ideas. Reach out and let’s build something one-of-one.</p>
+          <div style="margin-top: 14px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a class="btn" href="mailto:novaminds72@gmail.com">Email: novaminds72@gmail.com</a>
+            <a class="btn" href="https://x.com/novaminds72" target="_blank" rel="noopener">X: @novaminds72</a>
+            <a class="btn" href="https://www.instagram.com/novaminds72?igsh=MTJnY3lmNTN1eTAyaQ%3D%3D&utm_source=qr" target="_blank" rel="noopener">Instagram: @novaminds72</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div>© <span id="year"></span> NovaMinds — Heavenly Gamy Techy One of One</div>
+      <div class="socials">
+        <a href="mailto:novaminds72@gmail.com">Email</a>
+        <a href="https://x.com/novaminds72" target="_blank" rel="noopener">X</a>
+        <a href="https://www.instagram.com/novaminds72?igsh=MTJnY3lmNTN1eTAyaQ%3D%3D&utm_source=qr" target="_blank" rel="noopener">Instagram</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast -->
+  <div id="toast" class="toast" role="status" aria-live="polite">Theme updated</div>
+
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Theme toggle (persist)
+    const root = document.documentElement;
+    const themeToggle = document.getElementById('themeToggle');
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) root.setAttribute('data-theme', savedTheme);
+    themeToggle.addEventListener('click', () => {
+      const curr = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      root.setAttribute('data-theme', curr);
+      localStorage.setItem('theme', curr);
+      showToast('Theme updated');
+    });
+
+    // Toast
+    const toast = document.getElementById('toast');
+    let toastTimeout;
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.style.display = 'block';
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => toast.style.display = 'none', 1400);
+    }
+
+    // Typewriter for interactive header (not the team name)
+    const messages = [
+      'Invent Tomorrow, Play Today',
+      'Build for joy. Engineer for impact.',
+      'From Lagos, for the world.',
+      'One-of-one experiences.'
+    ];
+    const typeEl = document.getElementById('type');
+    let m = 0, i = 0, deleting = false;
+    function typeLoop() {
+      const text = messages[m];
+      if (!deleting) {
+        typeEl.textContent = text.slice(0, i + 1);
+        i++;
+        if (i === text.length) {
+          deleting = true;
+          setTimeout(typeLoop, 1200);
+          return;
+        }
+      } else {
+        typeEl.textContent = text.slice(0, i - 1);
+        i--;
+        if (i === 0) {
+          deleting = false;
+          m = (m + 1) % messages.length;
+        }
+      }
+      const speed = deleting ? 35 : 55;
+      setTimeout(typeLoop, speed);
+    }
+    typeLoop();
+
+    // Card shine follows cursor
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100 + '%';
+        const y = ((e.clientY - rect.top) / rect.height) * 100 + '%';
+        card.style.setProperty('--x', x);
+        card.style.setProperty('--y', y);
+      });
+    });
+
+    // Reveal on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('show');
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Gentle motion on ribbon chips
+    const ribbon = document.querySelector('.ribbon');
+    let hoverRAF;
+    ribbon.addEventListener('mousemove', (e) => {
+      cancelAnimationFrame(hoverRAF);
+      hoverRAF = requestAnimationFrame(() => {
+        const rect = ribbon.getBoundingClientRect();
+        const nx = (e.clientX - rect.left) / rect.width;
+        const ny = (e.clientY - rect.top) / rect.height;
+        ribbon.style.transform = `perspective(700px) rotateX(${(0.5 - ny) * 2}deg) rotateY(${(nx - 0.5) * 2}deg)`;
+      });
+    });
+    ribbon.addEventListener('mouseleave', () => {
+      ribbon.style.transform = 'none';
+    });
+
+    // Keyboard accessibility tweaks
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('keyup', (e) => {
+        if (e.key === 'Enter') el.click();
+      });
+    });
+  </script>
+</body>
+  </html>
